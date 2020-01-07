@@ -2,7 +2,13 @@ FROM phusion/baseimage:0.11
 MAINTAINER Andrii Hlukhanyk <andrii.hlukhanyk@coidea.agency>
 ENV REFRESHED_AT 2020-01-07
 
-# based on mattrayner/lamp
+# based on phusion/baseimage:0.11
+# MAINTAINER Phusion, Netherlands, https://www.phusion.nl/
+
+# based on dgraziotin/lamp
+# MAINTAINER Daniel Graziotin <daniel@ineed.coffee>
+
+# fork of mattrayner/lamp
 # MAINTAINER Matthew Rayner <matt@mattrayner.co.uk>
 
 ENV DOCKER_USER_ID 501 
