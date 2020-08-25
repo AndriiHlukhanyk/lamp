@@ -30,17 +30,19 @@ RUN groupmod -g ${BOOT2DOCKER_GID} staff
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
   apt-get -y upgrade && \
-  apt-get -y install supervisor libpq-dev libmemcached-dev wget git apache2 php-xdebug php-curl curl libapache2-mod-php7.2 mysql-server php7.2 php7.2-mysql pwgen php7.2-apc php7.2-gd php7.2-xml php7.2-mbstring php7.2-gettext zip unzip php7.2-zip  && \
+  apt-get -y install supervisor wget git apache2 php-xdebug php-curl curl libapache2-mod-php7.2 mysql-server php7.2 php7.2-mysql pwgen php7.2-apc php7.2-gd php7.2-xml php7.2-mbstring php7.2-gettext zip unzip php7.2-zip  && \
   apt-get -y autoremove && \
   echo "ServerName localhost" >> /etc/apache2/apache2.conf
   
 # Install memcached
-RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" \
-    && mkdir -p /usr/src/php/ext/memcached \
-    && tar -C /usr/src/php/ext/memcached -zxvf /tmp/memcached.tar.gz --strip 1 \
-    && docker-php-ext-configure memcached \
-    && docker-php-ext-install memcached \
-    && rm /tmp/memcached.tar.gz
+RUN apt-get upgrade -y
+RUN apt-get install -y memcached
+RUN apt-get install -y libmemcached-dev zlib1g-dev libicu-dev
+RUN git clone -b php7 https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
+&& docker-php-ext-configure /usr/src/php/ext/memcached \
+    --disable-memcached-sasl \
+&& docker-php-ext-install /usr/src/php/ext/memcached \
+&& rm -rf /usr/src/php/ext/memcached
 
 # Update CLI PHP to use 7.2
 RUN ln -sfn /usr/bin/php7.2 /etc/alternatives/php
