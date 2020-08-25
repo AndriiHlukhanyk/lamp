@@ -30,7 +30,7 @@ RUN groupmod -g ${BOOT2DOCKER_GID} staff
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
   apt-get -y upgrade && \
-  apt-get -y install supervisor wget git libz-dev libpq-dev libicu-dev libssl-dev libmcrypt-dev apache2 php-xdebug php-curl curl memcached php-memcached libmemcached-tools libmemcached-dev libapache2-mod-php7.2 mysql-server php7.2 php7.2-mysql pwgen php7.2-apc php7.2-gd php7.2-xml php7.2-mbstring php7.2-gettext zip unzip php7.2-zip  && \
+  apt-get -y install supervisor wget git libz-dev libpq-dev libicu-dev libssl-dev libmcrypt-dev apache2 php-xdebug php-curl curl php-memcached libmemcached-tools libmemcached-dev libapache2-mod-php7.2 mysql-server php7.2 php7.2-mysql pwgen php7.2-apc php7.2-gd php7.2-xml php7.2-mbstring php7.2-gettext zip unzip php7.2-zip  && \
   apt-get -y autoremove && \
   echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
