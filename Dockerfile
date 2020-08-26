@@ -80,7 +80,7 @@ ADD app/ /app
 
 # Adding memcached daemon
 RUN mkdir /etc/service/memcached
-COPY start_memcached.sh /etc/service/memcached/run
+COPY start-memcached.sh /etc/service/memcached/run
 RUN chmod +x /etc/service/memcached/run
 
 # Environment variables to configure php
