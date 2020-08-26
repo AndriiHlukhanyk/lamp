@@ -1,6 +1,6 @@
 FROM phusion/baseimage:0.11
 MAINTAINER Andrii Hlukhanyk <andrii.hlukhanyk@coidea.agency>
-ENV REFRESHED_AT 2020-01-07
+ENV REFRESHED_AT 2020-08-26
 
 # based on phusion/baseimage:0.11
 # MAINTAINER Phusion, Netherlands, https://www.phusion.nl/
@@ -78,12 +78,17 @@ RUN a2enmod rewrite
 RUN mkdir -p /app && rm -fr /var/www/html && ln -s /app /var/www/html
 ADD app/ /app
 
-#Environment variables to configure php
+# Adding memcached daemon
+RUN mkdir /etc/service/memcached
+COPY memcached.sh /etc/service/memcached/run
+RUN chmod +x /etc/service/memcached/run
+
+# Environment variables to configure php
 ENV PHP_UPLOAD_MAX_FILESIZE 16M
 ENV PHP_POST_MAX_SIZE 32M
 
 # Add volumes for the app and MySql
 VOLUME  ["/etc/mysql", "/var/lib/mysql", "/app" ]
 
-EXPOSE 80 3306
+EXPOSE 80 3306 11211
 CMD ["/run.sh"]
