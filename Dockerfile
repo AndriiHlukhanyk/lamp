@@ -30,12 +30,12 @@ RUN groupmod -g ${BOOT2DOCKER_GID} staff
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
   apt-get -y upgrade && \
-  apt-get -y install supervisor wget git libz-dev libpq-dev libicu-dev libssl-dev libmcrypt-dev apache2 php-xdebug php-curl curl memcached php-memcached libmemcached-tools libmemcached-dev libapache2-mod-php7.2 mysql-server php7.2 php7.2-mysql pwgen php7.2-apc php7.2-gd php7.2-xml php7.2-mbstring php7.2-gettext zip unzip php7.2-zip  && \
+  apt-get -y install supervisor wget git libz-dev libpq-dev libicu-dev libssl-dev libmcrypt-dev apache2 php-xdebug php-curl curl memcached php-memcached libmemcached-tools libmemcached-dev libapache2-mod-php7.3 mysql-server php7.3 php7.3-mysql pwgen php7.3-apc php7.3-gd php7.3-xml php7.3-mbstring php7.3-gettext zip unzip php7.3-zip  && \
   apt-get -y autoremove && \
   echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Update CLI PHP to use 7.2
-RUN ln -sfn /usr/bin/php7.2 /etc/alternatives/php
+# Update CLI PHP to use 7.3
+RUN ln -sfn /usr/bin/php7.3 /etc/alternatives/php
 
 # Add image configuration and scripts
 ADD supporting_files/start-apache2.sh /start-apache2.sh
@@ -48,8 +48,8 @@ ADD supporting_files/supervisord-memcached.conf /etc/supervisor/conf.d/superviso
 ADD supporting_files/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 
 # Set PHP timezones to Europe/London
-RUN sed -i "s/;date.timezone =/date.timezone = Europe\/London/g" /etc/php/7.2/apache2/php.ini
-RUN sed -i "s/;date.timezone =/date.timezone = Europe\/London/g" /etc/php/7.2/cli/php.ini
+RUN sed -i "s/;date.timezone =/date.timezone = Europe\/London/g" /etc/php/7.3/apache2/php.ini
+RUN sed -i "s/;date.timezone =/date.timezone = Europe\/London/g" /etc/php/7.3/cli/php.ini
 
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql
