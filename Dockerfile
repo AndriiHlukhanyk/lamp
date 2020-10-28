@@ -1,8 +1,8 @@
-FROM phusion/baseimage:0.11
+FROM phusion/baseimage:bionic-1.0.0
 MAINTAINER Andrii Hlukhanyk <andrii.hlukhanyk@coidea.agency>
-ENV REFRESHED_AT 2020-08-26
+ENV REFRESHED_AT 2020-10-28
 
-# based on phusion/baseimage:0.11
+# based on phusion/baseimage:bionic-1.0.0
 # MAINTAINER Phusion, Netherlands, https://www.phusion.nl/
 
 # based on dgraziotin/lamp
@@ -28,6 +28,7 @@ RUN groupmod -g ${BOOT2DOCKER_GID} staff
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
+RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update && \
   apt-get -y upgrade && \
   apt-get -y install supervisor wget git libz-dev libpq-dev libicu-dev libssl-dev libmcrypt-dev apache2 php-xdebug php-curl curl memcached php-memcached libmemcached-tools libmemcached-dev libapache2-mod-php7.3 mysql-server php7.3 php7.3-mysql pwgen php7.3-apc php7.3-gd php7.3-xml php7.3-mbstring php7.3-gettext zip unzip php7.3-zip  && \
