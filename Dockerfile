@@ -31,7 +31,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update && \
   apt-get -y upgrade && \
-  apt-get -y install supervisor wget git libz-dev libpq-dev libicu-dev libssl-dev libmcrypt-dev apache2 php-xdebug curl memcached php-memcached libmemcached-tools libmemcached-dev libapache2-mod-php7.3 mysql-server php7.3 php7.3-curl php7.3-dom php7.3-mcrypt php7.3-simplexml php7.3-ctype php7.3-intl php7.3-xsl php7.3-mysql pwgen php7.3-apc php7.3-gd php7.3-iconv php7.3-xml php7.3-mbstring php7.3-xmlwriter php7.3-gettext zip unzip php7.3-zip  && \
+  apt-get -y install supervisor wget git libz-dev libpq-dev libicu-dev libssl-dev libmcrypt-dev apache2 php-xdebug curl memcached php-memcached libmemcached-tools libmemcached-dev libapache2-mod-php7.3 mysql-server php7.3 php7.3-curl php7.3-dom php7.3-simplexml php7.3-ctype php7.3-intl php7.3-xsl php7.3-mysql pwgen php7.3-apc php7.3-gd php7.3-iconv php7.3-xml php7.3-mbstring php7.3-xmlwriter php7.3-gettext zip unzip php7.3-zip  && \
   apt-get -y autoremove && \
   echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
