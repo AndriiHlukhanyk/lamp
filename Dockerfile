@@ -1,6 +1,6 @@
 FROM phusion/baseimage:bionic-1.0.0
 MAINTAINER Andrii Hlukhanyk <andrii.hlukhanyk@coidea.agency>
-ENV REFRESHED_AT 2020-10-28
+ENV REFRESHED_AT 2020-11-05
 
 # based on phusion/baseimage:bionic-1.0.0
 # MAINTAINER Phusion, Netherlands, https://www.phusion.nl/
