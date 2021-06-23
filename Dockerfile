@@ -47,19 +47,34 @@ RUN chmod 600 /etc/ssl/private/dhparams.pem
 
 # XDEBUG
 RUN apt-get install php7.4-xdebug
-RUN echo "error_reporting = E_ALL" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "display_startup_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.profiler_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.idekey=\"PHPSTORM\"" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+RUN echo "xdebug.profiler_enable=1" >> /etc/php/7.4/apache2/php.ini
+RUN echo "xdebug.profiler_enable=1" >> /etc/php/7.4/cli/php.ini
+
+RUN echo "xdebug.remote_enable=1" >> /etc/php/7.4/apache2/php.ini
+RUN echo "xdebug.remote_enable=1" >> /etc/php/7.4/cli/php.ini
+
+RUN echo "xdebug.remote_connect_back=1" >> /etc/php/7.4/apache2/php.ini
+RUN echo "xdebug.remote_connect_back=1" >> /etc/php/7.4/cli/php.ini
+
+RUN echo "xdebug.idekey=\"PHPSTORM\"" >> /etc/php/7.4/apache2/php.ini
+RUN echo "xdebug.idekey=\"PHPSTORM\"" >> /etc/php/7.4/cli/php.ini
+
+RUN echo "xdebug.remote_port=9000" >> /etc/php/7.4/apache2/php.ini
+RUN echo "xdebug.remote_port=9000" >> /etc/php/7.4/cli/php.ini
+
+RUN echo "xdebug.remote_autostart=1" >> /etc/php/7.4/apache2/php.ini
+RUN echo "xdebug.remote_autostart=1" >> /etc/php/7.4/cli/php.ini
+
 # DockerNAT gateway IP
-RUN echo "xdebug.remote.host=localhost" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote.mode=req" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote.handler=dbgp" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.remote.host=localhost" >> /etc/php/7.4/apache2/php.ini
+RUN echo "xdebug.remote.host=localhost" >> /etc/php/7.4/cli/php.ini
+
+RUN echo "xdebug.remote.mode=req" >> /etc/php/7.4/apache2/php.ini
+RUN echo "xdebug.remote.mode=req" >> /etc/php/7.4/cli/php.ini
+
+RUN echo "xdebug.remote.handler=dbgp" >> /etc/php/7.4/apache2/php.ini
+RUN echo "xdebug.remote.handler=dbgp" >> /etc/php/7.4/cli/php.ini
 
 # Update CLI PHP to use 7.4
 RUN ln -sfn /usr/bin/php7.4 /etc/alternatives/php
@@ -75,8 +90,8 @@ ADD supporting_files/supervisord-memcached.conf /etc/supervisor/conf.d/superviso
 ADD supporting_files/supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 
 # Set PHP timezones to Europe/London
-RUN sed -i "s/;date.timezone =/date.timezone = Europe\/London/g" /etc/php/7.3/apache2/php.ini
-RUN sed -i "s/;date.timezone =/date.timezone = Europe\/London/g" /etc/php/7.3/cli/php.ini
+RUN sed -i "s/;date.timezone =/date.timezone = Europe\/London/g" /etc/php/7.4/apache2/php.ini
+RUN sed -i "s/;date.timezone =/date.timezone = Europe\/London/g" /etc/php/7.4/cli/php.ini
 
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql
