@@ -46,8 +46,7 @@ RUN openssl dhparam -out /etc/ssl/private/dhparams.pem 2048
 RUN chmod 600 /etc/ssl/private/dhparams.pem
 
 # XDEBUG
-RUN pecl install xdebug
-RUN docker-php-ext-enable xdebug
+RUN apt-get install php7.4-xdebug
 RUN echo "error_reporting = E_ALL" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "display_startup_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
