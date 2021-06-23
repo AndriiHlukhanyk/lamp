@@ -31,7 +31,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update && \
   apt-get -y upgrade && \
-  apt-get -y install supervisor wget git pkg-config build-essential ssl-cert libmcrypt-dev libz-dev libpq-dev libicu-dev libssl-dev apache2 php-xdebug curl memcached php-memcached libmemcached-tools libmemcached-dev libapache2-mod-php7.4 mysql-server php7.4 php7.4-curl php7.4-dev php7.4-pear php7.4-dom php7.4-simplexml php7.4-ctype php7.4-cli php7.4-intl php7.4-xsl php7.4-imap php7.4-mysql pwgen php7.4-apc php7.4-gd php7.4-iconv php7.4-xml php7.4-mbstring php7.4-xmlwriter php7.4-apcu php7.4-gettext zip unzip php7.4-zip  && \
+  apt-get -y install supervisor wget git pkg-config build-essential ssl-cert libmcrypt-dev libz-dev libpq-dev libicu-dev libssl-dev apache2 php-xdebug curl memcached php-memcached libmemcached-tools libmemcached-dev libapache2-mod-php7.4 mysql-server php7.4 php7.4-curl php7.4-dev php-pear php7.4-dom php7.4-simplexml php7.4-ctype php7.4-cli php7.4-intl php7.4-xsl php7.4-imap php7.4-mysql pwgen php7.4-apc php7.4-gd php7.4-iconv php7.4-xml php7.4-mbstring php7.4-xmlwriter php7.4-apcu php7.4-gettext zip unzip php7.4-zip  && \
   apt-get -y autoremove && \
   echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
@@ -87,7 +87,7 @@ ADD supporting_files/create_mysql_users.sh /create_mysql_users.sh
 RUN chmod 755 /*.sh
 
 # Add phpmyadmin
-ENV PHPMYADMIN_VERSION=5.0.0
+ENV PHPMYADMIN_VERSION=5.1.1
 RUN wget -O /tmp/phpmyadmin.tar.gz https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN_VERSION}/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages.tar.gz
 RUN tar xfvz /tmp/phpmyadmin.tar.gz -C /var/www
 RUN ln -s /var/www/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages /var/www/phpmyadmin
@@ -120,5 +120,5 @@ ENV PHP_POST_MAX_SIZE 32M
 # Add volumes for the app and MySql
 VOLUME  ["/etc/mysql", "/var/lib/mysql", "/app" ]
 
-EXPOSE 80 3306 11211
+EXPOSE 80 3306 11211 9000
 CMD ["/run.sh"]
