@@ -31,7 +31,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update && \
   apt-get -y upgrade && \
-  apt-get -y install supervisor wget git pkg-config build-essential ssl-cert libmcrypt-dev libz-dev libpq-dev libicu-dev libssl-dev apache2 php-xdebug curl memcached php-memcached libmemcached-tools libmemcached-dev libapache2-mod-php7.4 mysql-server php7.4 php7.4-curl php7.4-dev php-pear php7.4-dom php7.4-simplexml php7.4-ctype php7.4-cli php7.4-intl php7.4-xsl php7.4-imap php7.4-mysql pwgen php7.4-apc php7.4-gd php7.4-iconv php7.4-xml php7.4-mbstring php7.4-xmlwriter php7.4-apcu php7.4-gettext zip unzip php7.4-zip  && \
+  apt-get -y install supervisor wget git pkg-config build-essential ssl-cert libmcrypt-dev libz-dev libpq-dev libicu-dev libssl-dev apache2 php7.4-xdebug curl memcached php-memcached libmemcached-tools libmemcached-dev libapache2-mod-php7.4 mysql-server php7.4 php7.4-curl php7.4-dev php-pear php7.4-dom php7.4-simplexml php7.4-ctype php7.4-cli php7.4-intl php7.4-xsl php7.4-imap php7.4-mysql pwgen php7.4-apc php7.4-gd php7.4-iconv php7.4-xml php7.4-mbstring php7.4-xmlwriter php7.4-apcu php7.4-gettext zip unzip php7.4-zip  && \
   apt-get -y autoremove && \
   echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
@@ -46,7 +46,8 @@ RUN openssl dhparam -out /etc/ssl/private/dhparams.pem 2048
 RUN chmod 600 /etc/ssl/private/dhparams.pem
 
 # XDEBUG
-RUN apt-get install php7.4-xdebug
+RUN echo "xdebug.default_enable=1" >> /etc/php/7.4/apache2/php.ini
+RUN echo "xdebug.default_enable=1" >> /etc/php/7.4/cli/php.ini
 
 RUN echo "xdebug.profiler_enable=1" >> /etc/php/7.4/apache2/php.ini
 RUN echo "xdebug.profiler_enable=1" >> /etc/php/7.4/cli/php.ini
@@ -54,11 +55,11 @@ RUN echo "xdebug.profiler_enable=1" >> /etc/php/7.4/cli/php.ini
 RUN echo "xdebug.remote_enable=1" >> /etc/php/7.4/apache2/php.ini
 RUN echo "xdebug.remote_enable=1" >> /etc/php/7.4/cli/php.ini
 
-RUN echo "xdebug.remote_connect_back=1" >> /etc/php/7.4/apache2/php.ini
-RUN echo "xdebug.remote_connect_back=1" >> /etc/php/7.4/cli/php.ini
+RUN echo "xdebug.remote_connect_back=0" >> /etc/php/7.4/apache2/php.ini
+RUN echo "xdebug.remote_connect_back=0" >> /etc/php/7.4/cli/php.ini
 
-RUN echo "xdebug.idekey=\"PHPSTORM\"" >> /etc/php/7.4/apache2/php.ini
-RUN echo "xdebug.idekey=\"PHPSTORM\"" >> /etc/php/7.4/cli/php.ini
+RUN echo "xdebug.idekey=\"VSCODE\"" >> /etc/php/7.4/apache2/php.ini
+RUN echo "xdebug.idekey=\"VSCODE\"" >> /etc/php/7.4/cli/php.ini
 
 RUN echo "xdebug.remote_port=9000" >> /etc/php/7.4/apache2/php.ini
 RUN echo "xdebug.remote_port=9000" >> /etc/php/7.4/cli/php.ini
@@ -66,15 +67,12 @@ RUN echo "xdebug.remote_port=9000" >> /etc/php/7.4/cli/php.ini
 RUN echo "xdebug.remote_autostart=1" >> /etc/php/7.4/apache2/php.ini
 RUN echo "xdebug.remote_autostart=1" >> /etc/php/7.4/cli/php.ini
 
+RUN echo "xdebug.remote_handler=dbgp" >> /etc/php/7.4/apache2/php.ini
+RUN echo "xdebug.remote_handler=dbgp" >> /etc/php/7.4/cli/php.ini
+
 # DockerNAT gateway IP
-RUN echo "xdebug.remote.host=localhost" >> /etc/php/7.4/apache2/php.ini
-RUN echo "xdebug.remote.host=localhost" >> /etc/php/7.4/cli/php.ini
-
-RUN echo "xdebug.remote.mode=req" >> /etc/php/7.4/apache2/php.ini
-RUN echo "xdebug.remote.mode=req" >> /etc/php/7.4/cli/php.ini
-
-RUN echo "xdebug.remote.handler=dbgp" >> /etc/php/7.4/apache2/php.ini
-RUN echo "xdebug.remote.handler=dbgp" >> /etc/php/7.4/cli/php.ini
+RUN echo "xdebug.remote_host=host.docker.internal" >> /etc/php/7.4/apache2/php.ini
+RUN echo "xdebug.remote_host=host.docker.internal" >> /etc/php/7.4/cli/php.ini
 
 # Update CLI PHP to use 7.4
 RUN ln -sfn /usr/bin/php7.4 /etc/alternatives/php
